@@ -8,19 +8,25 @@ class Apt10Parent {
     }
 
     function showMedianValue($list) {
-        $minValue = $maxValue = 0;
-        $listCount = sizeof($list);
-
-        $minValue = $list[0];
-        for($i = 0; $i < $listCount; $i++) {
-            for($j = 0; $j < $listCount; $j++) {
-                if ($minValue > $list[$j]) {
-                    $minValue = $list[$j];
+        $size = count($list)-1;
+        for ($i=0; $i<$size; $i++) {
+            for ($j=0; $j<$size-$i; $j++) {
+                $k = $j+1;
+                if ($list[$k] < $list[$j]) {
+                    list($list[$j], $list[$k]) = array($list[$k], $list[$j]);
                 }
             }
-            
         }
-        echo "Median value; $minValue<br>";
+        $listCount = count($list);
+        $middleVal = floor(($listCount - 1) / 2);
+        if ($listCount % 2){
+            echo "Median value: ".$list[$middleVal]."<br>";
+        }
+        else {
+            $lowMid = $list[$middleVal];
+            $highMid = $list[$middleVal + 1];
+            echo "Median value: ".(($lowMid + $highMid) / 2)."<br>";;
+        }
     }
 
     function showLargestValue($list) {
